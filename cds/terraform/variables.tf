@@ -4,12 +4,12 @@ variable "db_password" {
 }
 
 variable "region" {
-  default     = "us-west-1"
+  default     = "us-east-1"
   description = "AWS region"
 }
 
 variable "vpc_cidr" {
-  default     = "10.2" #first two octets of the VPC CIDR
+  default     = "10.44" #first two octets of the VPC CIDR
   description = "CIDR for the VPC"
   type        = string
 }
@@ -32,7 +32,7 @@ variable "tags_env" {
   description = "Environment"
   type        = map(string)
   default = {
-    Environment = "rnd"
+    Environment = "prod"
   }
 }
 
