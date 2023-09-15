@@ -16,7 +16,7 @@ variable "vpc_cidr" {
 
 variable "vpc_name" {
   description = "Name of the VPC"
-  default = "cds-vpc-prod"
+  default = "cds2-vpc-prod"
   type        = string
 }
 
@@ -32,7 +32,7 @@ variable "tags_env" {
   description = "Environment"
   type        = map(string)
   default = {
-    Environment = "rnd"
+    Environment = "prod"
   }
 }
 
