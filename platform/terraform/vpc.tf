@@ -13,10 +13,10 @@ module "vpc" {
   version = "3.2.0"
 
   name                 = data.aws_ssm_parameter.vpc_name
-  cidr                 = "${data.aws_ssm_parameter_vpc_cidr}.0.0/16"
+  cidr                 = "${data.aws_ssm_parameter.vpc_cidr}.0.0/16"
   azs                  = data.aws_availability_zones.available.names
-  private_subnets      = ["${data.aws_ssm_parameter_vpc_cidr}.16.0/20", "${data.aws_ssm_parameter_vpc_cidr}.32.0/20", "${data.aws_ssm_parameter_vpc_cidr}.48.0/20"]
-  public_subnets       = ["${data.aws_ssm_parameter_vpc_cidr}.64.0/20", "${data.aws_ssm_parameter_vpc_cidr}.80.0/20", "${data.aws_ssm_parameter_vpc_cidr}.96.0/20"]
+  private_subnets      = ["${data.aws_ssm_parameter.vpc_cidr}.16.0/20", "${data.aws_ssm_parameter.vpc_cidr}.32.0/20", "${data.aws_ssm_parameter.vpc_cidr}.48.0/20"]
+  public_subnets       = ["${data.aws_ssm_parameter.vpc_cidr}.64.0/20", "${data.aws_ssm_parameter.vpc_cidr}.80.0/20", "${data.aws_ssm_parameter.vpc_cidr}.96.0/20"]
   enable_nat_gateway   = true
   single_nat_gateway   = false
   enable_dns_hostnames = true
