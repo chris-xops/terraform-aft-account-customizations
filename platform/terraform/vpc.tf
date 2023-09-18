@@ -12,18 +12,18 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.2.0"
 
-  name                 = data.aws_ssm_parameter.vpc_name
-  cidr                 = "${data.aws_ssm_parameter.vpc_cidr}.0.0/16"
+  name                 = data.aws_ssm_parameter.vpc_name.value
+  cidr                 = "${data.aws_ssm_parameter.vpc_cidr.value}.0.0/16"
   azs                  = data.aws_availability_zones.available.names
-  private_subnets      = ["${data.aws_ssm_parameter.vpc_cidr}.16.0/20", "${data.aws_ssm_parameter.vpc_cidr}.32.0/20", "${data.aws_ssm_parameter.vpc_cidr}.48.0/20"]
-  public_subnets       = ["${data.aws_ssm_parameter.vpc_cidr}.64.0/20", "${data.aws_ssm_parameter.vpc_cidr}.80.0/20", "${data.aws_ssm_parameter.vpc_cidr}.96.0/20"]
+  private_subnets      = ["${data.aws_ssm_parameter.vpc_cidr.value}.16.0/20", "${data.aws_ssm_parameter.vpc_cidr.value}.32.0/20", "${data.aws_ssm_parameter.vpc_cidr.value}.48.0/20"]
+  public_subnets       = ["${data.aws_ssm_parameter.vpc_cidr.value}.64.0/20", "${data.aws_ssm_parameter.vpc_cidr.value}.80.0/20", "${data.aws_ssm_parameter.vpc_cidr.value}.96.0/20"]
   enable_nat_gateway   = true
   single_nat_gateway   = false
   enable_dns_hostnames = true
   enable_dns_support   = true
 
   tags = {
-    "subnet_names" = "${data.aws_ssm_parameter.vpc_name} Subnets"
+    "subnet_names" = "${data.aws_ssm_parameter.vpc_name.value} Subnets"
   }
 
 }
@@ -51,7 +51,7 @@ resource "aws_iam_role" "vpc-flow" {
 }
 
 resource "aws_s3_bucket" "vpc-prod-flow-logs" {
-  bucket        = "${data.aws_ssm_parameter.vpc_name}-flow-logs"
+  bucket        = "${data.aws_ssm_parameter.vpc_name.value}-flow-logs"
   force_destroy = true
 
   tags = {
