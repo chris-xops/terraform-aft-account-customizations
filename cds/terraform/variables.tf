@@ -8,18 +8,6 @@ variable "region" {
   description = "AWS region"
 }
 
-variable "vpc_cidr" {
-  default     = "10.44" #first two octets of the VPC CIDR
-  description = "CIDR for the VPC"
-  type        = string
-}
-
-variable "vpc_name" {
-  description = "Name of the VPC"
-  default = "cds-vpc-prod"
-  type        = string
-}
-
 variable "tags_region" {
   description = "AWS region"
   type        = map(string)
@@ -38,12 +26,12 @@ variable "tags_env" {
 
 variable "vpc_remote_id" {
   description = "Peering destination vpc id"
-  default = "value"
+  default = "vpc-0d6d1c65352219720"
   type        = string
 }
 
 variable "vpc_remote_cidr" {
   description = "Peering destination vpc id"
-  default = "value"
+  default = "10.46.0.0/16"
   type        = string
 }
