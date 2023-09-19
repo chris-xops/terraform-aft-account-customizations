@@ -61,9 +61,8 @@ resource "aws_iam_role" "vpc-flow2" {
 resource "aws_s3_bucket" "vpc-prod-flow-logs2" {
   bucket        = "${data.aws_ssm_parameter.vpc_name_2.value}-flow-logs"
   force_destroy = true
-  providers = {
-    aws = aws.us-west-1
-  }
+  provider = aws.us-west-1
+  
 
   tags = {
     Terraform   = "true"
