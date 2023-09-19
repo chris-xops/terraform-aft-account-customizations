@@ -3,18 +3,6 @@ variable "region" {
   description = "AWS region"
 }
 
-variable "vpc_cidr" {
-  default     = "10.45" #first two octets of the VPC CIDR
-  description = "CIDR for the VPC"
-  type        = string
-}
-
-variable "vpc_name" {
-  description = "Name of the VPC"
-  default = "cds2-vpc-prod"
-  type        = string
-}
-
 variable "tags_region" {
   description = "AWS region"
   type        = map(string)
