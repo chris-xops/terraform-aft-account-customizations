@@ -1,6 +1,8 @@
 
   
-data "aws_availability_zones" "available_2" {}
+data "aws_availability_zones" "available_2" {
+  provider = aws.us-west-1
+}
 
 data "aws_ssm_parameter" "vpc_name_2" {
   name = "/aft/account-request/custom-fields/vpc_name_2"
