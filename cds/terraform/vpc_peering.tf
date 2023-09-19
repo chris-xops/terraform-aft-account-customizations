@@ -3,9 +3,16 @@ resource "aws_vpc_peering_connection" "vpc_cds_peering" {
   peer_owner_id = var.peer_owner_id # accepter owner id
   peer_vpc_id   = var.vpc_remote_id # accepter
   auto_accept   = true
+  accepter {
+    allow_remote_vpc_dns_resolution = true
+  }
+
+  requester {
+    allow_remote_vpc_dns_resolution = true
+  }
 }
 
-data "aws_vpc" "accepter" {
+/* data "aws_vpc" "accepter" {
   id = var.vpc_remote_id
 }
 
@@ -35,4 +42,4 @@ resource "aws_route" "accepter" {
   route_table_id            = local.accepter_route_tables_ids[count.index]
   destination_cidr_block    = data.aws_vpc.requester.cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection.vpc_cds_peering.id
-}
+} */
