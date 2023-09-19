@@ -1,5 +1,6 @@
 resource "aws_vpc_peering_connection" "vpc_cds_peering" {
   vpc_id        = module.vpc.vpc_id # requester
+  peer_owner_id = var.peer_owner_id # accepter owner id
   peer_vpc_id   = var.vpc_remote_id # accepter
   auto_accept   = true
 }

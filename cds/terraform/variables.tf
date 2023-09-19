@@ -30,6 +30,13 @@ variable "vpc_remote_id" {
   type        = string
 }
 
+variable "peer_owner_id" {
+  description = "Peering destination vpc id"
+  default = "800261776937"
+  type        = string
+}
+
+
 variable "vpc_remote_cidr" {
   description = "Peering destination vpc id"
   default = "10.46.0.0/16"
