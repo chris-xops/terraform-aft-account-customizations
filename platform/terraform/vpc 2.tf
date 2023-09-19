@@ -1,9 +1,8 @@
 provider "aws" {
-  region = "us-west-1"
+    region = "us-west-1"
 }
   
-
-data "aws_availability_zones" "available" {}
+data "aws_availability_zones" "available_2" {}
 
 data "aws_ssm_parameter" "vpc_name_2" {
   name = "/aft/account-request/custom-fields/vpc_name_2"
@@ -13,19 +12,20 @@ data "aws_ssm_parameter" "vpc_cidr_2" {
 }
 
 
-module "vpc" {
+module "vpc2" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.2.0"
 
-  name                 = data.aws_ssm_parameter.vpc_name.value
+  name                 = data.aws_ssm_parameter.vpc_name_2.value
   cidr                 = "${data.aws_ssm_parameter.vpc_cidr_2.value}.0.0/16"
-  azs                  = data.aws_availability_zones.available.names
+  azs                  = data.aws_availability_zones.available_2.names
   private_subnets      = ["${data.aws_ssm_parameter.vpc_cidr_2.value}.16.0/20", "${data.aws_ssm_parameter.vpc_cidr_2.value}.32.0/20", "${data.aws_ssm_parameter.vpc_cidr_2.value}.48.0/20"]
   public_subnets       = ["${data.aws_ssm_parameter.vpc_cidr_2.value}.64.0/20", "${data.aws_ssm_parameter.vpc_cidr_2.value}.80.0/20", "${data.aws_ssm_parameter.vpc_cidr_2.value}.96.0/20"]
   enable_nat_gateway   = true
   single_nat_gateway   = false
   enable_dns_hostnames = true
   enable_dns_support   = true
+  
 
   tags = {
     "subnet_names" = "${data.aws_ssm_parameter.vpc_name.value} Subnets"
@@ -33,7 +33,7 @@ module "vpc" {
 
 }
 
-resource "aws_iam_role" "vpc-flow" {
+resource "aws_iam_role" "vpc-flow2" {
   name = "vpc-flow-logs-role"
 
   assume_role_policy = jsonencode({
@@ -55,7 +55,7 @@ resource "aws_iam_role" "vpc-flow" {
   }
 }
 
-resource "aws_s3_bucket" "vpc-prod-flow-logs" {
+resource "aws_s3_bucket" "vpc-prod-flow-logs2" {
   bucket        = "${data.aws_ssm_parameter.vpc_name_2.value}-flow-logs"
   force_destroy = true
 
