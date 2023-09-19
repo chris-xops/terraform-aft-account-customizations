@@ -1,4 +1,5 @@
 provider "aws" {
+    alias = "us-east-1"
     region = "us-east-1"
 }
 
@@ -15,7 +16,9 @@ data "aws_ssm_parameter" "vpc_cidr" {
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.2.0"
-
+  providers = {
+    aws = aws.us-east-1
+  }
   name                 = data.aws_ssm_parameter.vpc_name.value
   cidr                 = "${data.aws_ssm_parameter.vpc_cidr.value}.0.0/16"
   azs                  = data.aws_availability_zones.available.names
