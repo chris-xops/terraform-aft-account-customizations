@@ -1,7 +1,4 @@
-provider "aws" {
-    alias = "us-west-1"
-    region = "us-west-1"
-}
+
   
 data "aws_availability_zones" "available_2" {}
 
