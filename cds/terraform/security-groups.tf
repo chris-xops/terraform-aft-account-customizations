@@ -2,7 +2,7 @@
 resource "aws_security_group" "cds_rnd_rds_sg" {
   name        = "rds-sg"
   description = "Security group for RDS"
-  vpc_id = module.vpc.vpc_id
+  vpc_id      = module.vpc.vpc_id
 
   # Regla para permitir el tráfico desde la otra VPC a través de peering
   ingress {
@@ -14,10 +14,10 @@ resource "aws_security_group" "cds_rnd_rds_sg" {
 }
 
 resource "aws_security_group" "cds_rnd_rds_sg2" {
-  provider = aws.us-west-1
+  provider    = aws.us-west-1
   name        = "rds2-sg"
   description = "Security group for RDS"
-  vpc_id = module.vpc2.vpc_id
+  vpc_id      = module.vpc2.vpc_id
 
   # Regla para permitir el tráfico desde la otra VPC a través de peering
   ingress {

@@ -26,19 +26,19 @@ variable "tags_env" {
 
 variable "vpc_remote_id" {
   description = "Peering destination vpc id"
-  default = "vpc-0d6d1c65352219720"
+  default     = "vpc-0d6d1c65352219720"
   type        = string
 }
 
 variable "peer_owner_id" {
   description = "Peering destination vpc id"
-  default = "800261776937"
+  default     = "800261776937"
   type        = string
 }
 
 
 variable "vpc_remote_cidr" {
   description = "Peering destination vpc id"
-  default = "10.46.0.0/16"
+  default     = "10.46.0.0/16"
   type        = string
 }

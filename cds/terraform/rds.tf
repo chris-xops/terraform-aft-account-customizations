@@ -44,7 +44,7 @@ resource "aws_db_instance" "read_replica" {
   identifier              = "cds-rds-replica"
   storage_encrypted       = true
   skip_final_snapshot     = true
-  vpc_security_group_ids    = [aws_security_group.cds_rnd_rds_sg.id]
+  vpc_security_group_ids  = [aws_security_group.cds_rnd_rds_sg.id]
 
   tags = {
     Name = "CDS RND Read Replica RDS"
@@ -52,19 +52,19 @@ resource "aws_db_instance" "read_replica" {
 }
 
 resource "aws_db_instance" "standby_replica" {
-  provider = aws.us-west-1
+  provider                = aws.us-west-1
   storage_type            = "gp2"
   engine                  = "mysql"
   engine_version          = "5.7"
   instance_class          = "db.t2.small"
   parameter_group_name    = "default.mysql5.7"
   backup_retention_period = 7
-  replicate_source_db     = aws_db_instance.primary.id
+  replicate_source_db     = aws_db_instance.primary.arn
   identifier              = "cds-rds-standby"
   storage_encrypted       = true
   skip_final_snapshot     = true
   db_subnet_group_name    = aws_db_subnet_group.cds_rnd_db_subnet_group2.name
-  vpc_security_group_ids    = [aws_security_group.cds_rnd_rds_sg2.id]
+  vpc_security_group_ids  = [aws_security_group.cds_rnd_rds_sg2.id]
   tags = {
     Name = "Standby Replica RDS"
   }

@@ -1,5 +1,5 @@
 
-  
+
 data "aws_availability_zones" "available_2" {
   provider = aws.us-west-1
 }
@@ -27,7 +27,7 @@ module "vpc2" {
   single_nat_gateway   = false
   enable_dns_hostnames = true
   enable_dns_support   = true
-  
+
 
   tags = {
     "subnet_names" = "${data.aws_ssm_parameter.vpc_name.value} Subnets"
@@ -60,8 +60,8 @@ resource "aws_iam_role" "vpc-flow2" {
 resource "aws_s3_bucket" "vpc-prod-flow-logs2" {
   bucket        = "${data.aws_ssm_parameter.vpc_name_2.value}-flow-logs2"
   force_destroy = true
-  provider = aws.us-west-1
-  
+  provider      = aws.us-west-1
+
 
   tags = {
     Terraform   = "true"
