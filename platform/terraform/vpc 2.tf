@@ -36,7 +36,7 @@ module "vpc2" {
 }
 
 resource "aws_iam_role" "vpc-flow2" {
-  name = "vpc-flow-logs-role"
+  name = "vpc-flow-logs-role2"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
