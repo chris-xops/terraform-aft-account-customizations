@@ -68,9 +68,6 @@ resource "aws_db_instance" "standby_replica" {
     Name = "Standby Replica RDS"
   }
 }
-resource "aws_db_instance" "replica" {
-  provider
-}
 
 
 resource "aws_secretsmanager_secret" "database_credentials" {
