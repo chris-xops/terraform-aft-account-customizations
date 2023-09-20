@@ -52,6 +52,7 @@ resource "aws_db_instance" "read_replica" {
 }
 
 resource "aws_db_instance" "standby_replica" {
+  provider = aws.us-west-1
   storage_type            = "gp2"
   engine                  = "mysql"
   engine_version          = "5.7"
