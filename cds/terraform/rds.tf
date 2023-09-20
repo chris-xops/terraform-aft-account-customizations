@@ -62,8 +62,8 @@ resource "aws_db_instance" "standby_replica" {
   identifier              = "cds-rds-replica"
   storage_encrypted       = true
   skip_final_snapshot     = true
-  vpc_security_group_ids    = aws_db_subnet_group.cds_rnd_db_subnet_group2.name
-
+  db_subnet_group_name    = aws_db_subnet_group.cds_rnd_db_subnet_group2.name
+  vpc_security_group_ids    = [aws_security_group.cds_rnd_rds_sg2.id]
   tags = {
     Name = "Standby Replica RDS"
   }
