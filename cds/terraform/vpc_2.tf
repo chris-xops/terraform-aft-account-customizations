@@ -58,7 +58,7 @@ resource "aws_iam_role" "vpc-flow2" {
 }
 
 resource "aws_s3_bucket" "vpc-prod-flow-logs2" {
-  bucket        = "${data.aws_ssm_parameter.vpc_name_2.value}-flow-logs"
+  bucket        = "${data.aws_ssm_parameter.vpc_name_2.value}-flow-logs2"
   force_destroy = true
   provider = aws.us-west-1
   
