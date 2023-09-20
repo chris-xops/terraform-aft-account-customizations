@@ -17,23 +17,25 @@ resource "aws_kms_key" "kms_rds_key" {
 resource "aws_kms_key_policy" "kms_rds_policy" {
   key_id = aws_kms_key.kms_rds_key.id
 
-  policy = <<POLICY
-  {
-    "Version": "2012-10-17",
-    "Id": "key-default-1",
-    "Statement": [
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Id      = "key-default-1",
+    Statement = [
       {
-        "Sid": "Enable IAM User Permissions",
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "rds.amazonaws.com"
-        },
-        "Action": "kms:*
-        "Resource": "*"
-      }
-    ]
-  }
-  POLICY
+        Sid       = "Enable IAM User Permissions",
+        Effect    = "Allow",
+        Principal = "*",
+        Action    = [
+          "kms:Encrypt",
+          "kms:Decrypt",
+          "kms:ReEncrypt*",
+          "kms:GenerateDataKey*",
+          "kms:DescribeKey",
+        ],
+        Resource  = "*",
+      },
+    ],
+  })
 }
 
 
