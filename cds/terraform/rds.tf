@@ -3,6 +3,11 @@ resource "aws_db_subnet_group" "cds_rnd_db_subnet_group" {
   subnet_ids = module.vpc.private_subnets
 }
 
+resource "aws_db_subnet_group" "cds_rnd_db_subnet_group2" {
+  name       = "cds_rnd_db_subnet_group_2"
+  provider   = aws.us-west-1
+  subnet_ids = module.vpc2.private_subnets
+}
 
 resource "aws_db_instance" "primary" {
   allocated_storage         = 20
@@ -46,6 +51,27 @@ resource "aws_db_instance" "read_replica" {
     Name = "CDS RND Read Replica RDS"
   }
 }
+
+resource "aws_db_instance" "standby_replica" {
+  provider            = aws.us-west-1
+  allocated_storage    = 20
+  storage_type        = "gp2"
+  engine              = "mysql"
+  engine_version      = "5.7"
+  instance_class      = "db.t2.small"
+  name                = "cds-standby-replica"
+  parameter_group_name = "default.mysql5.7"
+  identifier              = "cds-rds-standby-replica"
+  storage_encrypted       = true
+  skip_final_snapshot     = true
+  source_db_instance_identifier = aws_db_instance.primary.id
+  db_subnet_group_name = aws_db_subnet_group.cds_rnd_db_subnet_group2.name
+
+  tags = {
+    Name = "Standby Replica RDS"
+  }
+}
+
 resource "aws_secretsmanager_secret" "database_credentials" {
   name = "CDS_RND_Secret"
 }
