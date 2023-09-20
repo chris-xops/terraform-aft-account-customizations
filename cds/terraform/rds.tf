@@ -9,6 +9,35 @@ resource "aws_db_subnet_group" "cds_rnd_db_subnet_group2" {
   subnet_ids = module.vpc2.private_subnets
 }
 
+resource "aws_kms_key" "kms_rds_key" {
+  description             = "RDS KMS Key"
+  deletion_window_in_days = 7
+}
+
+resource "aws_kms_key_policy" "kms_rds_policy" {
+  key_id = aws_kms_key.kms_rds_key.id
+
+  policy = <<POLICY
+  {
+    "Version": "2012-10-17",
+    "Id": "key-default-1",
+    "Statement": [
+      {
+        "Sid": "Enable IAM User Permissions",
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "rds.amazonaws.com"
+        },
+        "Action": "kms:*
+        "Resource": "*"
+      }
+    ]
+  }
+  POLICY
+}
+
+
+
 resource "aws_db_instance" "primary" {
   allocated_storage         = 20
   storage_type              = "gp2"
@@ -26,6 +55,8 @@ resource "aws_db_instance" "primary" {
   skip_final_snapshot       = false
   multi_az                  = true
   vpc_security_group_ids    = [aws_security_group.cds_rnd_rds_sg.id]
+
+  kms_key_id = aws_kms_key.kms_rds_key.arn
 
 
   tags = {
@@ -46,6 +77,8 @@ resource "aws_db_instance" "read_replica" {
   skip_final_snapshot     = true
   vpc_security_group_ids  = [aws_security_group.cds_rnd_rds_sg.id]
 
+  kms_key_id = aws_kms_key.kms_rds_key.arn
+
   tags = {
     Name = "CDS RND Read Replica RDS"
   }
@@ -65,6 +98,8 @@ resource "aws_db_instance" "standby_replica" {
   skip_final_snapshot     = true
   db_subnet_group_name    = aws_db_subnet_group.cds_rnd_db_subnet_group2.name
   vpc_security_group_ids  = [aws_security_group.cds_rnd_rds_sg2.id]
+
+  kms_key_id = aws_kms_key.kms_rds_key.arn
   tags = {
     Name = "Standby Replica RDS"
   }
