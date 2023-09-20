@@ -59,7 +59,6 @@ resource "aws_db_instance" "standby_replica" {
   engine              = "mysql"
   engine_version      = "5.7"
   instance_class      = "db.t2.small"
-  name                = "cds-standby-replica"
   parameter_group_name = "default.mysql5.7"
   identifier              = "cds-rds-standby-replica"
   storage_encrypted       = true
