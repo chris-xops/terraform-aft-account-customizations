@@ -15,7 +15,7 @@ provider "aws" {
 
 # Custom provider for 'us-east-2' region
 provider "aws" {
-  alias  = "us_east_2"
+  alias  = "us-east-2"
   region = "us-east-2"
   assume_role {
     role_arn    = "{{ target_admin_role_arn }}"
@@ -29,7 +29,7 @@ provider "aws" {
 
 # Custom provider for 'us-west-1' region
 provider "aws" {
-  alias  = "us_west_1"
+  alias  = "us-west-1"
   region = "us-west-1"
   assume_role {
     role_arn    = "{{ target_admin_role_arn }}"
