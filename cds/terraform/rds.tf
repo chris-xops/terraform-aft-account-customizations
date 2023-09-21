@@ -26,11 +26,7 @@ resource "aws_kms_key_policy" "kms_rds_policy" {
         Effect    = "Allow",
         Principal = "*",
         Action    = [
-          "kms:Encrypt",
-          "kms:Decrypt",
-          "kms:ReEncrypt*",
-          "kms:GenerateDataKey*",
-          "kms:DescribeKey",
+          "kms:*",
         ],
         Resource  = "*",
       },
@@ -94,7 +90,7 @@ resource "aws_db_instance" "standby_replica" {
   instance_class          = "db.t2.small"
   parameter_group_name    = "default.mysql5.7"
   backup_retention_period = 7
-  replicate_source_db     = aws_db_instance.primary.identifier
+  replicate_source_db     = aws_db_instance.primary.arn
   identifier              = "cds-rds-standby"
   storage_encrypted       = true
   skip_final_snapshot     = true
