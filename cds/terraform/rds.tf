@@ -16,6 +16,7 @@ resource "aws_kms_key" "kms_rds_key" {
 
 resource "aws_kms_key_policy" "kms_rds_policy" {
   key_id = aws_kms_key.kms_rds_key.id
+  provider   = aws.us-west-1
 
   policy = jsonencode({
     Version = "2012-10-17",
