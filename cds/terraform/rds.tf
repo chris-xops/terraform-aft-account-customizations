@@ -15,7 +15,7 @@ resource "aws_kms_key" "kms_rds_key" {
   multi_region = true
 }
 
-resource "aws_kms_key" "kms_rds_key_2" {
+resource "aws_kms_replica_key" "kms_rds_key_2" {
   description             = "RDS KMS Key replica"
   provider   = aws.us-west-1
   deletion_window_in_days = 7
