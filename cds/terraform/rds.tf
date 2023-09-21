@@ -12,11 +12,19 @@ resource "aws_db_subnet_group" "cds_rnd_db_subnet_group2" {
 resource "aws_kms_key" "kms_rds_key" {
   description             = "RDS KMS Key"
   deletion_window_in_days = 7
+  multi_region = true
 }
+
+resource "aws_kms_key" "kms_rds_key_2" {
+  description             = "RDS KMS Key replica"
+  deletion_window_in_days = 7
+  primary_key_id = aws_kms_key.kms_rds_key.id
+}
+
+
 
 resource "aws_kms_key_policy" "kms_rds_policy" {
   key_id = aws_kms_key.kms_rds_key.id
-  provider   = aws.us-west-1
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -25,7 +33,6 @@ resource "aws_kms_key_policy" "kms_rds_policy" {
       {
         Sid       = "Enable IAM User Permissions",
         Effect    = "Allow",
-        Principal = "*",
         Action    = [
           "kms:*",
         ],
@@ -98,7 +105,7 @@ resource "aws_db_instance" "standby_replica" {
   db_subnet_group_name    = aws_db_subnet_group.cds_rnd_db_subnet_group2.name
   vpc_security_group_ids  = [aws_security_group.cds_rnd_rds_sg2.id]
 
-  kms_key_id = aws_kms_key.kms_rds_key.arn
+  kms_key_id = aws_kms_key.kms_rds_key2.arn
   tags = {
     Name = "Standby Replica RDS"
   }
