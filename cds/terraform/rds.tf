@@ -17,8 +17,9 @@ resource "aws_kms_key" "kms_rds_key" {
 
 resource "aws_kms_key" "kms_rds_key_2" {
   description             = "RDS KMS Key replica"
+  provider   = aws.us-west-1
   deletion_window_in_days = 7
-  primary_key_id = aws_kms_key.kms_rds_key.id
+  primary_key_arn = aws_kms_key.kms_rds_key.arn
 }
 
 
