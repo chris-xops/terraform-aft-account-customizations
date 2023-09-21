@@ -34,6 +34,9 @@ resource "aws_kms_key_policy" "kms_rds_policy" {
       {
         Sid       = "Enable IAM User Permissions",
         Effect    = "Allow",
+        Principal = {
+          Service = "rds.amazonaws.com",
+        },
         Action    = [
           "kms:*",
         ],
